@@ -201,6 +201,45 @@ public class YourSolverTest {
 
     }
 
+    @Test
+    public void testSnakeMakeBateCirculeDontEatMe() {
+
+        /*assertB("☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼\n" +
+                "☼     ╔══════►☼\n" +
+                "☼     ╚═╗     ☼\n" +
+                "☼       ║     ☼\n" +
+                "☼     ╔═╝     ☼\n" +
+                "☼     ║       ☼\n" +
+                "☼     ║   ☻   ☼\n" +
+                "☼     ║       ☼\n" +
+                "☼     ║       ☼\n" +
+                "☼     ║       ☼\n" +
+                "☼     ║☺      ☼\n" +
+                "☼     ║       ☼\n" +
+                "☼     ║ ╔════╕☼\n" +
+                "☼     ╚═╝     ☼\n" +
+                "☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼", "DOWN");*/
+
+        assertB("☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼" +
+                "☼     ▲       ☼" +
+                "☼     ║       ☼" +
+                "☼   ╔═╝      ╓☼" +
+                "☼   ║        ║☼" +
+                "☼   ║        ║☼" +
+                "☼   ║        ║☼" +
+                "☼   ║        ║☼" +
+                "☼   ║        ║☼" +
+                "☼   ║ ☻      ║☼" +
+                "☼   ║        ║☼" +
+                "☼   ║ ☺      ║☼" +
+                "☼   ║        ║☼" +
+                "☼   ╚════════╝☼" +
+                "☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼", "RIGHT");
+
+
+
+    }
+
     private void assertB(String boardString, String expected) {
         // given
         YourSolver solver = new YourSolver(new RandomDice());

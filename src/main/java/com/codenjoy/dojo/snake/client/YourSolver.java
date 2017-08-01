@@ -225,6 +225,8 @@ public class YourSolver implements Solver<Board> {
         int snakeHeadY = board.getHead().getY();
         String snakeDirection = board.getSnakeDirection().name();
 
+        String lastChoise = "";
+        String directionEatBadApple ="";
         //arrDirect.remove(snakeDirection);
         //ставим на первое место предпологаемое направление
         arrDirect.remove(result);
@@ -250,11 +252,13 @@ public class YourSolver implements Solver<Board> {
             }
             Point pointNextSnakeStep = new PointImpl(nextSnakeStepX, nextSnakeStepY);
             Point pointSnakeHead = new PointImpl(snakeHeadX, snakeHeadY);
+
+            //следуйщий шаг будет буз столкноверния
             if (!allSnake.contains(pointNextSnakeStep) && !walls.contains(pointNextSnakeStep) && !badAppale.contains(pointNextSnakeStep)) {
                 //вырезали змейке голову
-                List<Point> allSnakeNotHead = allSnake;
-                allSnakeNotHead.remove(pointSnakeHead);
-
+                /*List<Point> allSnakeNotHead = allSnake;
+                allSnakeNotHead.remove(pointSnakeHead);*/
+                lastChoise = result;
                 boolean directioIsGood = true;
                 //TODO ищем лучгий маршрут
                 for (Point partSnake : allSnake) {
@@ -288,8 +292,17 @@ public class YourSolver implements Solver<Board> {
                     return Direction.valueOf(result).toString();
                 }
             }
+            //остался последний вариант сьесть яблоко или умиреть
+            if (badAppale.contains(pointNextSnakeStep)){
+                directionEatBadApple = result;
+            }
         }
-        return result;
+
+        //TODo у меня мало вариантов, надо выбрать лучший !!!!!
+        if (lastChoise == "" && directionEatBadApple !=""){
+            lastChoise = directionEatBadApple;
+        }
+        return lastChoise;
     }
 
     public static void main(String[] args) {
