@@ -236,9 +236,44 @@ public class YourSolverTest {
                 "☼   ╚════════╝☼" +
                 "☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼", "RIGHT");
 
+assertB("☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼\n" +
+                    "☼             ☼\n" +
+                    "☼             ☼\n" +
+                    "☼           ☻ ☼\n" +
+                    "☼             ☼\n" +
+                    "☼    ╔═╗      ☼\n" +
+                    "☼    ║ ║    ╓ ☼\n" +
+                    "☼    ║ ║    ║ ☼\n" +
+                    "☼    ║ ║    ║ ☼\n" +
+                    "☼    ║ ║    ║ ☼\n" +
+                    "☼    ║ ║    ║ ☼\n" +
+                    "☼    ║ ▼    ║ ☼\n" +
+                    "☼    ╚══════╝ ☼\n" +
+                    "☼         ☺   ☼\n" +
+                    "☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼", "RIGHT");
 
 
+
+    }@Test
+    public void testSnakeDontEatBadApple() {
+        assertB("☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼\n" +
+                "☼  ╔══►☻    ☺ ☼\n" +
+                "☼  ║          ☼\n" +
+                "☼  ║          ☼\n" +
+                "☼  ║          ☼\n" +
+                "☼  ╙          ☼\n" +
+                "☼             ☼\n" +
+                "☼             ☼\n" +
+                "☼             ☼\n" +
+                "☼             ☼\n" +
+                "☼             ☼\n" +
+                "☼             ☼\n" +
+                "☼             ☼\n" +
+                "☼             ☼\n" +
+                "☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼", "DOWN");
     }
+
+
 
     private void assertB(String boardString, String expected) {
         // given
