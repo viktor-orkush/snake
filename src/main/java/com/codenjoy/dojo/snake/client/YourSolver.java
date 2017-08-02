@@ -287,6 +287,7 @@ public class YourSolver implements Solver<Board> {
                 dtDistance = new DirectionDistanceManager(arrDtDistance).getDtByDirection("DOWN");
                 if (dtDistance == 0) {
                     int idElem = new DirectionDistanceManager(arrDtDistance).getIdElementByDirection("DOWN");
+                    if(idElem == -1) continue;
                     dtDistance = board.size() - snakeHeadY + 1;
                     arrDtDistance[idElem].setDt(dtDistance);
                 }
@@ -302,9 +303,10 @@ public class YourSolver implements Solver<Board> {
                         dtDistance = dt;
                     }
                 }
-                dtDistance = new DirectionDistanceManager(arrDtDistance).getDtByDirection("DOWN");
+                dtDistance = new DirectionDistanceManager(arrDtDistance).getDtByDirection("UP");
                 if (dtDistance == 0) {
-                    int idElem = new DirectionDistanceManager(arrDtDistance).getIdElementByDirection("DOWN");
+                    int idElem = new DirectionDistanceManager(arrDtDistance).getIdElementByDirection("UP");
+                    if(idElem == -1) continue;
                     dtDistance = snakeHeadY + 1;
                     arrDtDistance[idElem].setDt(dtDistance);
                 }
@@ -323,6 +325,7 @@ public class YourSolver implements Solver<Board> {
                 dtDistance = new DirectionDistanceManager(arrDtDistance).getDtByDirection("RIGHT");
                 if (dtDistance == 0) {
                     int idElem = new DirectionDistanceManager(arrDtDistance).getIdElementByDirection("RIGHT");
+                    if(idElem == -1) continue;
                     dtDistance = board.size() - snakeHeadX + 1;
                     arrDtDistance[idElem].setDt(dtDistance);
                 }
@@ -340,6 +343,7 @@ public class YourSolver implements Solver<Board> {
                 dtDistance = new DirectionDistanceManager(arrDtDistance).getDtByDirection("LEFT");
                 if (dtDistance == 0) {
                     int idElem = new DirectionDistanceManager(arrDtDistance).getIdElementByDirection("LEFT");
+                    if(idElem == -1) continue;
                     dtDistance = snakeHeadX + 1;
                     arrDtDistance[idElem].setDt(dtDistance);
                 }
