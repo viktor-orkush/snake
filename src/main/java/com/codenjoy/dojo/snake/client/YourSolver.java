@@ -32,13 +32,9 @@ import com.codenjoy.dojo.services.PointImpl;
 import com.codenjoy.dojo.services.RandomDice;
 import com.codenjoy.dojo.snake.model.Elements;
 
-import javax.naming.spi.DirectoryManager;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-
-import static java.lang.System.exit;
 
 /**
  * User: your name
@@ -268,7 +264,7 @@ public class YourSolver implements Solver<Board> {
         if (arrDirection.size() == 1) return arrDirection.get(0);
 
         for (String direction : arrDirection) {
-            arrDtDistance[index++] = new DirectionDistance(direction, 0);
+            arrDtDistance[index++] = new DirectionDistance(direction, 0,0,0);
         }
 
         for (String direction : arrDirection) {
@@ -277,19 +273,19 @@ public class YourSolver implements Solver<Board> {
                 int dtDistance = 0;
                 for (Point partSnake : allSnake) {
                     if (snakeHeadX == partSnake.getX() && snakeHeadY < partSnake.getY()) {
-                        int dt = partSnake.getY() - snakeHeadY;
-                        //arrDtDistance[index ++] = new DirectionDistance(direction, dt);
-                        dtDistance = new DirectionDistanceManager(arrDtDistance).getDtByDirection("DOWN");
-                        dtDistance = dt;
+                        int idElem = new DirectionDistanceManager(arrDtDistance).getIdElementByDirection("DOWN");
+                        if (idElem == -1) continue;
+                        dtDistance = partSnake.getY() - snakeHeadY;
+                        arrDtDistance[idElem].setDtToSnake(dtDistance);
                     }
 
                 }
                 dtDistance = new DirectionDistanceManager(arrDtDistance).getDtByDirection("DOWN");
                 if (dtDistance == 0) {
                     int idElem = new DirectionDistanceManager(arrDtDistance).getIdElementByDirection("DOWN");
-                    if(idElem == -1) continue;
+                    if (idElem == -1) continue;
                     dtDistance = board.size() - snakeHeadY + 1;
-                    arrDtDistance[idElem].setDt(dtDistance);
+                    arrDtDistance[idElem].setDtToSnake(dtDistance);
                 }
 
             }
@@ -297,18 +293,18 @@ public class YourSolver implements Solver<Board> {
                 int dtDistance = 0;
                 for (Point partSnake : allSnake) {
                     if (snakeHeadX == partSnake.getX() && snakeHeadY > partSnake.getY()) {
-                        int dt = snakeHeadY - partSnake.getY();
-                        //arrDtDistance[index ++] = new DirectionDistance(direction, dt);
-                        dtDistance = new DirectionDistanceManager(arrDtDistance).getDtByDirection("UP");
-                        dtDistance = dt;
+                        int idElem = new DirectionDistanceManager(arrDtDistance).getIdElementByDirection("UP");
+                        if (idElem == -1) continue;
+                        dtDistance = snakeHeadY - partSnake.getY();
+                        arrDtDistance[idElem].setDtToSnake(dtDistance);
                     }
                 }
                 dtDistance = new DirectionDistanceManager(arrDtDistance).getDtByDirection("UP");
                 if (dtDistance == 0) {
                     int idElem = new DirectionDistanceManager(arrDtDistance).getIdElementByDirection("UP");
-                    if(idElem == -1) continue;
+                    if (idElem == -1) continue;
                     dtDistance = snakeHeadY + 1;
-                    arrDtDistance[idElem].setDt(dtDistance);
+                    arrDtDistance[idElem].setDtToSnake(dtDistance);
                 }
             }
             //смотрим совпадения по Y
@@ -316,36 +312,36 @@ public class YourSolver implements Solver<Board> {
                 int dtDistance = 0;
                 for (Point partSnake : allSnake) {
                     if (snakeHeadY == partSnake.getY() && snakeHeadX < partSnake.getX()) {
-                        int dt = partSnake.getX() - snakeHeadX;
-                        //arrDtDistance[index ++] = new DirectionDistance(direction, dt);
-                        dtDistance = new DirectionDistanceManager(arrDtDistance).getDtByDirection("RIGHT");
-                        dtDistance = dt;
+                        int idElem = new DirectionDistanceManager(arrDtDistance).getIdElementByDirection("RIGHT");
+                        if (idElem == -1) continue;
+                        dtDistance = partSnake.getX() - snakeHeadX;
+                        arrDtDistance[idElem].setDtToSnake(dtDistance);
                     }
                 }
                 dtDistance = new DirectionDistanceManager(arrDtDistance).getDtByDirection("RIGHT");
                 if (dtDistance == 0) {
                     int idElem = new DirectionDistanceManager(arrDtDistance).getIdElementByDirection("RIGHT");
-                    if(idElem == -1) continue;
+                    if (idElem == -1) continue;
                     dtDistance = board.size() - snakeHeadX + 1;
-                    arrDtDistance[idElem].setDt(dtDistance);
+                    arrDtDistance[idElem].setDtToSnake(dtDistance);
                 }
             }
             if (direction.equals("LEFT")) {
                 int dtDistance = 0;
                 for (Point partSnake : allSnake) {
                     if (snakeHeadY == partSnake.getY() && snakeHeadX > partSnake.getX()) {
-                        int dt = snakeHeadX - partSnake.getX();
-//                            arrDtDistance[index ++] = new DirectionDistance(direction, dt);
-                        dtDistance = new DirectionDistanceManager(arrDtDistance).getDtByDirection("LEFT");
-                        dtDistance = dt;
+                        int idElem = new DirectionDistanceManager(arrDtDistance).getIdElementByDirection("LEFT");
+                        if (idElem == -1) continue;
+                        dtDistance = snakeHeadX - partSnake.getX();
+                        arrDtDistance[idElem].setDtToSnake(dtDistance);
                     }
                 }
                 dtDistance = new DirectionDistanceManager(arrDtDistance).getDtByDirection("LEFT");
                 if (dtDistance == 0) {
                     int idElem = new DirectionDistanceManager(arrDtDistance).getIdElementByDirection("LEFT");
-                    if(idElem == -1) continue;
+                    if (idElem == -1) continue;
                     dtDistance = snakeHeadX + 1;
-                    arrDtDistance[idElem].setDt(dtDistance);
+                    arrDtDistance[idElem].setDtToSnake(dtDistance);
                 }
             }
         }
@@ -358,10 +354,7 @@ public class YourSolver implements Solver<Board> {
 
         //{"UP", "DOWN", "LEFT", "RIGHT"};
         ArrayList<String> arrDirect = new ArrayList<String>();
-        arrDirect.add("UP");
-        arrDirect.add("DOWN");
-        arrDirect.add("LEFT");
-        arrDirect.add("RIGHT");
+        writeArrAllDirection(arrDirect);
 
         //удаляем обратное направление
         String snakeReverseDirection = directionReverseToCurent(board.getSnakeDirection().name());
@@ -403,8 +396,11 @@ public class YourSolver implements Solver<Board> {
 
         //следуйщий шаг будет буз столкноверния
         if (!allSnake.contains(pointNextSnakeStep) && !walls.contains(pointNextSnakeStep) && !badAppale.contains(pointNextSnakeStep)) {
-            lastChoise = result;
-            return Direction.valueOf(result).toString();
+            //*************************************************************************************************
+            String batterWay = verifyFuterMovement(result);
+            //*************************************************************************************************
+
+            return Direction.valueOf(batterWay).toString();
         }
 
         //если впереди припяцтвие выбираем лучший вариант
@@ -415,12 +411,158 @@ public class YourSolver implements Solver<Board> {
         return result;
     }
 
+    private String verifyFuterMovement(String result) {
+        /*int snakeHeadX = board.getHead().getX();
+        int snakeHeadY = board.getHead().getY();
+
+        Point cordinatApple = board.getApples().get(0);
+        int appleX = cordinatApple.getX();
+        int appleY = cordinatApple.getY();
+
+        List<Point> allSnake = board.getSnake();*/
+
+        ArrayList<String> arrDirection = takeAlloweDirection(result);
+
+        DirectionDistance[] arrDeltaDistance = new DirectionDistance[arrDirection.size()];
+        int index = 0;
+
+        if (arrDirection.size() == 1) return arrDirection.get(0);
+
+        for (String direction : arrDirection) {
+            arrDeltaDistance[index++] = getInformOfDirection(direction);
+        }
+
+        for (DirectionDistance directionDistance : arrDeltaDistance){
+
+        }
+        //если иду к цели безпрепятствий
+//        если есть припяцтвие но оно за яблоком
+        //если припяцтвие перед яблоком надо обойти даный маршрут отпадает
+        //провиряем оставшие два направления
+            //надо выбрать лучшее
+            //1) то что без змейки на пути
+
+        return result;
+    }
+
+
     public static void main(String[] args) {
 //        WebSocketRunner.runOnServer("192.168.1.1:8080", // to use for local server
         WebSocketRunner.run(WebSocketRunner.Host.REMOTE,  // to use for codenjoy.com server
                 USER_NAME,
                 new YourSolver(new RandomDice()),
                 new Board());
+    }
+
+
+//*************************************************************************************************************************
+//
+    public DirectionDistance getInformOfDirection (String direct) {
+        int snakeHeadX = board.getHead().getX();
+        int snakeHeadY = board.getHead().getY();
+
+        Point cordinatApple = board.getApples().get(0);
+        int appleX = cordinatApple.getX();
+        int appleY = cordinatApple.getY();
+
+        int dtToGoodApple = 0;
+        int dtToWall = 0;
+        int dtToSnake = 0;
+
+        List<Point> allSnake = board.getSnake();
+
+        DirectionDistance directionDistance = new DirectionDistance(direct, 0,0,0);
+
+        //проверяем возможное совпадение в будущем пробуем не зациклить ЗМЕЙКУ
+        if (direct.equals("DOWN")) {
+            for (Point partSnake : allSnake) {
+                //на пути есть часть змейки
+                if (snakeHeadX == partSnake.getX() && snakeHeadY < partSnake.getY()) {
+                    dtToSnake = snakeHeadY - partSnake.getY();
+                    directionDistance.setDtToSnake(dtToSnake);
+                }
+            }
+            dtToGoodApple = appleY - snakeHeadY;
+            directionDistance.setDtToApple(dtToGoodApple);
+            dtToWall= board.size() - snakeHeadY;
+            directionDistance.setDtToWall(dtToWall);
+            return directionDistance;
+        }
+
+        if (direct.equals("UP")) {
+            for (Point partSnake : allSnake) {
+                //на пути есть часть змейки
+                if (snakeHeadX == partSnake.getX() && snakeHeadY > partSnake.getY()) {
+                    dtToSnake = snakeHeadY - partSnake.getY();
+                    directionDistance.setDtToSnake(dtToSnake);
+                }
+            }
+            dtToGoodApple = snakeHeadY - appleY;
+            directionDistance.setDtToApple(dtToGoodApple);
+            dtToWall= snakeHeadY;
+            directionDistance.setDtToWall(dtToWall);
+            return directionDistance;
+        }
+
+        //смотрим совпадения по Y
+        if (direct.equals("RIGHT")) {
+            for (Point partSnake : allSnake) {
+                //на пути есть часть змейки
+                if (snakeHeadY == partSnake.getY() && snakeHeadX < partSnake.getX()) {
+                    dtToSnake = partSnake.getX() - snakeHeadX;
+                    directionDistance.setDtToSnake(dtToSnake);
+                }
+            }
+            dtToGoodApple = appleX - snakeHeadX;
+            directionDistance.setDtToApple(dtToGoodApple);
+            dtToWall= board.size() - snakeHeadX;
+            directionDistance.setDtToWall(dtToWall);
+            return directionDistance;
+        }
+
+        if (direct.equals("LEFT")) {
+            for (Point partSnake : allSnake) {
+                //на пути есть часть змейки
+                if (snakeHeadY == partSnake.getY() && snakeHeadX > partSnake.getX()) {
+                    dtToSnake = snakeHeadX - partSnake.getX();
+                    directionDistance.setDtToSnake(dtToSnake);
+                }
+            }
+            dtToGoodApple = snakeHeadX - appleX;
+            directionDistance.setDtToApple(dtToGoodApple);
+            dtToWall= snakeHeadX;
+            directionDistance.setDtToWall(dtToWall);
+            return directionDistance;
+        }
+        return null;
+    }
+
+
+
+    private ArrayList<String> takeAlloweDirection(String result) {
+        //{"UP", "DOWN", "LEFT", "RIGHT"};
+        ArrayList<String> arrDirect = new ArrayList<String>();
+        writeArrAllDirection(arrDirect);
+
+        //удаляем обратное направление
+        String snakeReverseDirection = directionReverseToCurent(board.getSnakeDirection().name());
+        arrDirect.remove(snakeReverseDirection);
+
+        //ставим на первое место предпологаемое направление
+        arrDirect.remove(result);
+        arrDirect.add(0, result);
+
+        //удаляем все пути где есть столкновения и плохое яблоко
+        removeNotAllowedDirection(arrDirect);
+        return arrDirect;
+    }
+
+
+    public void writeArrAllDirection(ArrayList<String> arrDirect) {
+        arrDirect.add("UP");
+        arrDirect.add("DOWN");
+        arrDirect.add("LEFT");
+        arrDirect.add("RIGHT");
     }
 
 }

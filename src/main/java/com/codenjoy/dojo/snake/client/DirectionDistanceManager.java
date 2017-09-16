@@ -1,7 +1,5 @@
 package com.codenjoy.dojo.snake.client;
 
-import java.util.ArrayList;
-
 /**
  * Created by Viktor on 02.08.2017.
  */
@@ -14,7 +12,7 @@ public class DirectionDistanceManager {
     public int getDtByDirection (String direction){
         for(DirectionDistance dd : arrDD){
             if(dd.getDirection().equals(direction)){
-                return dd.getDt();
+                return dd.getDtToSnake();
             }
 
         }
